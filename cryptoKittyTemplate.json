@@ -1,0 +1,111 @@
+{
+  "@context": [
+    "https://internft.org/ns/token/v1"
+  ],
+  "@type": "token:template",
+  "classBehavior": [
+    {
+      "idTemplate": "did:abc:token:${id}#mint",
+      "path": "did:abc:token:${id}/mint",
+      "type": "token:internalCall",
+      "authorizedCaller": [
+        "#ceoAddress",
+        "#cooAddress",
+        "#cfoAddress"
+      ]
+    },{
+      "idTemplate": "did:abc:token:${id}#mintPromo",
+      "path": "did:abc:token:${id}/mintPromo",
+      "type": "token:internalCall",
+      "authorizedCaller": [
+        "#ceoAddress",
+        "#cooAddress",
+        "#cfoAddress"
+      ]
+    }
+  ],
+  "classProperty": [ /// copying cryptokitties authorization pattern
+    {
+      "idTemplate": "did:abc:token:ck#controller", /// do we need this?
+      "type":"token:controller",
+      "value":"LITERAL_COSMOS_ADDRESS",
+      "mutable":true
+    },{
+      "idTemplate": "did:abc:token:${id}#ceoAddress", 
+      "type": "token:cosmosAddress",
+      "value": "LITERAL_COSMOS_ADDRESS",
+      "mutable": true
+    },{
+      "idTemplate": "did:abc:token:${id}#cfoAddress",
+      "type": "token:cosmosAddress",
+      "value": "LITERAL_COSMOS_ADDRESS",
+      "mutable": true
+    },{
+      "idTemplate": "did:abc:token:${id}#cooAddress",
+      "type": "token:cosmosAddress",
+      "value": "LITERAL_COSMOS_ADDRESS",
+      "mutable": true
+    }
+  ],
+  "tokenBehavior": [
+    {
+      "idTemplate": "did:abc:token:ck:${token:tokenId}#update",
+      "path": "did:abc:token:ck:${token:tokenId}/update",
+      "handler": "/token/update", 
+      "type": "token:internalCall",
+      "authorizedCaller": "token:owner"
+    },{
+      "idTemplate": "did:abc:token:ck:${token:tokenId}#send",
+      "path": "did:abc:token:ck${token:tokenId}/send",
+      "type": "token:internalCall",
+      "handler": "/token/send",
+      "authorizedCaller": "token:owner"
+    },{
+      "idTemplate": "did:abc:token:ck:${token:tokenId}#sendZ",
+      "path": "did:abc:token:ck:${token:tokenId}/sendZ",
+      "type": "token:authorizedCall"
+    }
+  ],
+  "tokenProperty": [{
+    "idTemplate":"did:abc:token:#id",
+    "type" : "token:uint256",
+    "mutable" : false,
+    "valueTemplate" : "${id}"
+  },{
+    "idTemplate": "did:abc:token:${id}#genes",
+    "type": "token:uint256",
+    "mutable": false
+  },{
+    "idTemplate": "did:abc:token:${id}#birthTime",
+    "type": "token:uint64",
+    "mutable": false
+  },{
+    "idTemplate": "did:abc:token:${id}#cooldownEndBlock",
+    "type": "token:uint64",
+    "mutable": "internally"
+  },{
+    "idTemplate": "did:abc:token:${id}#matronId",
+    "type": "token:uint32",
+    "mutable": false
+  },{
+    "idTemplate": "did:abc:token:${id}#sireId",
+    "type": "token:uint32",
+    "mutable": false
+  },{
+    "idTemplate": "did:abc:token:${id}#siringWithId",
+    "type": "token:uint32",
+    "mutable": "internally"
+  },{
+    "idTemplate": "did:abc:token:${id}#cooldownIndex",
+    "type": "token:uint16",
+    "mutable": "internally"
+  },{
+    "idTemplate": "did:abc:token:$(id}#generation",
+    "type": "token:uint16",
+    "mutable": false
+  },{
+    "idTemplate": "did:abc:token:$(id}#owner",
+    "type": "token:cosmosAddress",
+    "mutable": "internally"
+  }]
+}
